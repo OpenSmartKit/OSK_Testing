@@ -18,10 +18,11 @@
 #include <settings/ModuleSettings.h>
 #include <NetworkManager.h>
 #include <AsyncElegantOTA.h>
+#include <Debug.h>
 
-#include <AsyncTCP.h>
+//#include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
-#include <ArduinoJson.h>
+//#include <ArduinoJson.h>
 
 Button *btn1;
 Button *btn2;
@@ -36,13 +37,12 @@ ModuleSettings moduleSettings;
 NetworkManager *nm;
 
 AsyncWebServer server(80);
-//AsyncWebSocket ws("/ws");
 
 void debugPrint()
 {
-	Serial.printf(" - MS: %lu, HEAP: %d\n", millis(), ESP.getFreeHeap());
-  //writeRS485();
-  //nm->debug("Debug: ");
+	char buffer [30];
+  sprintf (buffer, "MS: %lu, HEAP: %d", millis(), ESP.getFreeHeap());
+  DEBUG_MSG_NL(buffer);
 }
 
 bool testRelay = false;
@@ -51,48 +51,21 @@ void greenLedBlink()
 	io->set(OSK_GREEN_LED, !io->get(OSK_GREEN_LED));
 }
 
-void notifyClients() {
-  //ws.textAll(String("test"));
+void onLight() {
+	DEBUG_MSG_NL("On light");
+	io->ledDim(OSK_DCO1, 100, 2000);
 }
 
-void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
-  AwsFrameInfo *info = (AwsFrameInfo*)arg;
-  if (info->final && info->index == 0 && info->len == len && info->opcode == WS_TEXT) {
-    data[len] = 0;
-    if (strcmp((char*)data, "toggle") == 0) {
-      notifyClients();
-    }
-  }
-}
-
-void onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type,
-             void *arg, uint8_t *data, size_t len) {
-  switch (type) {
-    case WS_EVT_CONNECT:
-      Serial.printf("WebSocket client #%u connected from %s\n", client->id(), client->remoteIP().toString().c_str());
-      break;
-    case WS_EVT_DISCONNECT:
-      Serial.printf("WebSocket client #%u disconnected\n", client->id());
-      break;
-    case WS_EVT_DATA:
-      handleWebSocketMessage(arg, data, len);
-      break;
-    case WS_EVT_PONG:
-    case WS_EVT_ERROR:
-      break;
-  }
-}
-
-void initWebSocket() {
-  //ws.onEvent(onEvent);
-  //server.addHandler(&ws);
+void offLight() {
+	DEBUG_MSG_NL("Off light");
+	io->ledDim(OSK_DCO1, 0, 2000);
 }
 
 void setup()
 {
 	delay(1000);
 	Serial.begin(115200);
-	Serial.println("Starting...");
+	DEBUG_MSG_NL("Starting...");
 
 	EEPROM.begin(sizeof(Settings));
 
@@ -104,31 +77,24 @@ void setup()
 	io->mode(OSK_GREEN_LED, OUTPUT);
 	io->set(OSK_GREEN_LED, HIGH);
 
-	io->ledDim(OSK_DCO3, 30, 5000);
-
 	tDebug = xTimerCreate("debugPrint", pdMS_TO_TICKS(5000), pdTRUE, (void *)0, reinterpret_cast<TimerCallbackFunction_t>(debugPrint));
 	xTimerStart(tDebug, 0);
 
-	tGreenLed = xTimerCreate("greenLed", pdMS_TO_TICKS(1000), pdTRUE, (void *)0, reinterpret_cast<TimerCallbackFunction_t>(greenLedBlink));
+	tGreenLed = xTimerCreate("greenLed", pdMS_TO_TICKS(500), pdTRUE, (void *)0, reinterpret_cast<TimerCallbackFunction_t>(greenLedBlink));
 	xTimerStart(tGreenLed, 0);
 
-	initWebSocket();
+	m1 = new Motion(OSK_IO1, true);
+	m1->onCallback(onLight);
+	m1->offCallback(offLight);
+	m1->begin(120);
 
-	server.on("/config", HTTP_GET, [](AsyncWebServerRequest *request){
-      AsyncResponseStream *response = request->beginResponseStream("application/json");
-      DynamicJsonDocument json(1024);
-      json["name"] = moduleSettings.getModuleName();
-      json["ssid"] = WiFi.SSID();
-      json["ip"] = WiFi.localIP().toString();
-      serializeJson(json, *response);
-      request->send(response);
-  });
-
-  AsyncElegantOTA.begin(&server);
+	AsyncElegantOTA.begin(&server);
 	server.begin();
 }
 
 void loop()
 {
-	//ws.cleanupClients();
+	#if DEBUG_USE_TELNET
+  	telnet.loop();
+	#endif
 }

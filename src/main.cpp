@@ -58,108 +58,107 @@ void greenLedBlink()
 		DEBUG OUTPUT FUNCTIONS
    =============== */
 void onLightKitchen() {
-	DBG("On light Kitchen");
+	DBG_S("On light Kitchen");
 	io->ledDim(OSK_DCO1, 100, 2000);
 }
 
 void offLightKitchen() {
-	DBG("Off light Kitchen");
+	DBG_S("Off light Kitchen");
 	io->ledDim(OSK_DCO1, 0, 2000);
 }
 
 void onLightBathroom() {
-	DBG("On light Bathroom");
+	DBG_S("On light Bathroom");
 	io->ledDim(OSK_DCO3, 100, 2000);
 }
 
 void offLightBathroom() {
-	DBG("Off light Bathroom");
+	DBG_S("Off light Bathroom");
 	io->ledDim(OSK_DCO3, 0, 2000);
 }
 
 void onTriggerIO1(bool value) {
-	DBG("IO1: ", value);
+	DBG("IO1: %d", value);
 }
 
 void onTriggerIO2(bool value) {
-	DBG("IO2: ", value);
+	DBG("IO2: %d", value);
 }
 
 void onTriggerIO3(bool value) {
-	DBG("IO3: ", value);
+	DBG("IO3: %d", value);
 }
 
 void onTriggerIO4(bool value) {
-	DEBUG_MSG("IO4: ");
-	DBG(value);
+	DBG("IO4: %d", value);
 }
 
 void onTriggerIO5(bool value) {
-	DBG("IO5: ", value);
+	DBG("IO5: %d", value);
 }
 
 void onTriggerIO6(bool value) {
-	DBG("IO6: ", value);
+	DBG("IO6: %d", value);
 }
 
 void onTriggerIO7(bool value) {
-	DBG("IO75: ", value);
+	DBG("IO75: %d", value);
 }
 
 void onTriggerIO8(bool value) {
-	DBG("IO8: ", value);
+	DBG("IO8: %d", value);
 }
 
 void onTriggerIO9(bool value) {
-	DBG("IO9: ", value);
+	DBG("IO9: %d", value);
 }
 
 void onTriggerIO10(bool value) {
-	DBG("IO10: ", value);
+	DBG("IO10: %d", value);
 }
 
 void onTriggerIO11(bool value) {
-	DBG("IO11: ", value);
+	DBG("IO11: %d", value);
 }
 
 void onTriggerIO12(bool value) {
-	DBG("IO12: ", value);
+	DBG("IO12: %d", value);
 }
 
 void onTriggerIO13(bool value) {
-	DBG("IO13: ", value);
+	DBG("IO13: %d", value);
 }
 
 void onTriggerIO14(bool value) {
-	DBG("IO14: ", value);
+	DBG("IO14: %d", value);
 }
 
 void onTriggerIO15(bool value) {
-	DBG("IO15: ", value);
+	DBG("IO15: %d", value);
 }
 
 void onTriggerIO16(bool value) {
-	DBG("IO16: ", value);
+	DBG("IO16: %d", value);
 }
 
 void btnChanged() {
-	DBG("IO1 Changed");
+	DBG_S("IO1 Changed");
 }
 
 void btnHigh() {
-	DBG("IO2 HIGH");
+	DBG_S("IO2 HIGH");
 }
 
 void btnLOW() {
-	DBG("IO3 LOW");
+	DBG_S("IO3 LOW");
 }
 
 void btnClick() {
-	DBG("IO4 Click");
+	DBG_S("IO4 Click");
 }
 
 void btnLongClick() {
-	DBG("IO5 long Click");
+	DBG_S("IO5 long Click");
 }
 /* ==============
 		END DEBUG OUTPUT FUNCTIONS
@@ -244,7 +243,7 @@ void setup()
 {
 	delay(1000);
 	Serial.begin(115200);
-	DBG("Starting...");
+	DBG_S("Starting...");
 
 	// Scan I2C for debug
 	scanner.Init();

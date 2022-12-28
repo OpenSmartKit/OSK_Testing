@@ -3,7 +3,6 @@
 
 #include <Arduino.h>
 #include <EEPROM.h>
-#include <settings/ThermCases.h>
 
 #define START_ADDR 0
 #define SIGNATURE 0x123544F0
@@ -14,11 +13,6 @@ struct Settings
   char name[32];
   char WiFiName[32];
   char WiFiPass[32];
-
-  uint8_t state;
-  uint16_t currentStep;
-  uint8_t countOfCases;
-  ThermCases cases[12];
 };
 
 Settings getSettings();

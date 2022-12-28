@@ -44,9 +44,7 @@ I2CScanner scanner;
 
 void debugPrint()
 {
-	char buffer [30];
-  sprintf (buffer, "MS: %lu, HEAP: %d", millis(), ESP.getFreeHeap());
-  DEBUG_MSG_NL(buffer);
+  DBG("MS: %lu, HEAP: %d", millis(), ESP.getFreeHeap());
 }
 
 void greenLedBlink()
@@ -59,123 +57,107 @@ void greenLedBlink()
 		DEBUG OUTPUT FUNCTIONS
    =============== */
 void onLightKitchen() {
-	DEBUG_MSG_NL("On light Kitchen");
+	DBG("On light Kitchen");
 	io->ledDim(OSK_DCO1, 100, 2000);
 }
 
 void offLightKitchen() {
-	DEBUG_MSG_NL("Off light Kitchen");
+	DBG("Off light Kitchen");
 	io->ledDim(OSK_DCO1, 0, 2000);
 }
 
 void onLightBathroom() {
-	DEBUG_MSG_NL("On light Bathroom");
+	DBG("On light Bathroom");
 	io->ledDim(OSK_DCO3, 100, 2000);
 }
 
 void offLightBathroom() {
-	DEBUG_MSG_NL("Off light Bathroom");
+	DBG("Off light Bathroom");
 	io->ledDim(OSK_DCO3, 0, 2000);
 }
 
 void onTriggerIO1(bool value) {
-	DEBUG_MSG("IO1: ");
-	DEBUG_MSG_NL(value);
+	DBG("IO1: %d", value);
 }
 
 void onTriggerIO2(bool value) {
-	DEBUG_MSG("IO2: ");
-	DEBUG_MSG_NL(value);
+	DBG("IO2: %d", value);
 }
 
 void onTriggerIO3(bool value) {
-	DEBUG_MSG("IO3: ");
-	DEBUG_MSG_NL(value);
+	DBG("IO3: %d", value);
 }
 
 void onTriggerIO4(bool value) {
-	DEBUG_MSG("IO4: ");
-	DEBUG_MSG_NL(value);
+	DBG("IO4: %d", value);
 }
 
 void onTriggerIO5(bool value) {
-	DEBUG_MSG("IO5: ");
-	DEBUG_MSG_NL(value);
+	DBG("IO5: %d", value);
 }
 
 void onTriggerIO6(bool value) {
-	DEBUG_MSG("IO6: ");
-	DEBUG_MSG_NL(value);
+	DBG("IO6: %d", value);
 }
 
 void onTriggerIO7(bool value) {
-	DEBUG_MSG("IO7: ");
-	DEBUG_MSG_NL(value);
+	DBG("IO75: %d", value);
 }
 
 void onTriggerIO8(bool value) {
-	DEBUG_MSG("IO8: ");
-	DEBUG_MSG_NL(value);
+	DBG("IO8: %d", value);
 }
 
 void onTriggerIO9(bool value) {
-	DEBUG_MSG("IO9: ");
-	DEBUG_MSG_NL(value);
+	DBG("IO9: %d", value);
 }
 
 void onTriggerIO10(bool value) {
-	DEBUG_MSG("IO10: ");
-	DEBUG_MSG_NL(value);
+	DBG("IO10: %d", value);
 }
 
 void onTriggerIO11(bool value) {
-	DEBUG_MSG("IO11: ");
-	DEBUG_MSG_NL(value);
+	DBG("IO11: %d", value);
 }
 
 void onTriggerIO12(bool value) {
-	DEBUG_MSG("IO12: ");
-	DEBUG_MSG_NL(value);
+	DBG("IO12: %d", value);
 }
 
 void onTriggerIO13(bool value) {
-	DEBUG_MSG("IO13: ");
-	DEBUG_MSG_NL(value);
+	DBG("IO13: %d", value);
 }
 
 void onTriggerIO14(bool value) {
-	DEBUG_MSG("IO14: ");
-	DEBUG_MSG_NL(value);
+	DBG("IO14: %d", value);
 }
 
 void onTriggerIO15(bool value) {
-	DEBUG_MSG("IO15: ");
-	DEBUG_MSG_NL(value);
+	DBG("IO15: %d", value);
 }
 
 void onTriggerIO16(bool value) {
-	DEBUG_MSG("IO16: ");
-	DEBUG_MSG_NL(value);
+	DBG("IO16: %d", value);
 }
 
 void btnChanged() {
-	DEBUG_MSG_NL("IO1 Changed");
+	DBG("IO1 Changed");
 }
 
 void btnHigh() {
-	DEBUG_MSG_NL("IO2 HIGH");
+	DBG("IO2 HIGH");
 }
 
 void btnLOW() {
-	DEBUG_MSG_NL("IO3 LOW");
+	DBG("IO3 LOW");
 }
 
 void btnClick() {
-	DEBUG_MSG_NL("IO4 Click");
+	DBG("IO4 Click");
 }
 
 void btnLongClick() {
-	DEBUG_MSG_NL("IO5 long Click");
+	DBG("IO5 long Click");
 }
 /* ==============
 		END DEBUG OUTPUT FUNCTIONS
@@ -260,7 +242,7 @@ void setup()
 {
 	delay(1000);
 	Serial.begin(115200);
-	DEBUG_MSG_NL("Starting...");
+	DBG("Starting...");
 
 	// Scan I2C for debug
 	scanner.Init();
@@ -294,7 +276,7 @@ void setup()
 
 void loop()
 {
-	#if DEBUG_USE_TELNET
+	#if OSK_DEBUG_USE_TELNET
   	telnet.loop();
 	#endif
 }

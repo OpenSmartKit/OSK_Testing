@@ -216,10 +216,10 @@ void testIOButtons() {
 	btn3->onLow(btnLOW);
 
 	btn4 = new Button(OSK_IO4);
-	btn4->click(btnClick);
+	btn4->onClick(btnClick);
 
 	btn5 = new Button(OSK_IO5);
-	btn5->longClick(btnLongClick);
+	btn5->onLongClick(btnLongClick);
 }
 
 /*

@@ -12,8 +12,7 @@
 #include <Motion.h>
 #include <SPI.h>
 #include <WiFi.h>
-#include <settings/Settings.h>
-#include <settings/ModuleSettings.h>
+#include <ModuleSettings.h>
 #include <NetworkManager.h>
 #include <AsyncElegantOTA.h>
 #include <Debug.h>
@@ -208,7 +207,7 @@ void directTestIOInput() {
 */
 void testIOButtons() {
 	btn1 = new Button(OSK_IO1);
-	btn1->onChange(btnChanged);
+	//btn1->onChange(btnChanged);
 
 	btn2 = new Button(OSK_IO2);
 	btn2->onHigh(btnHigh);

@@ -58,22 +58,22 @@ void greenLedBlink()
 		DEBUG OUTPUT FUNCTIONS
    =============== */
 void onLightKitchen() {
-	DBG_S("On light Kitchen");
+	DBG("On light Kitchen");
 	io->ledDim(OSK_DCO1, 100, 2000);
 }
 
 void offLightKitchen() {
-	DBG_S("Off light Kitchen");
+	DBG("Off light Kitchen");
 	io->ledDim(OSK_DCO1, 0, 2000);
 }
 
 void onLightBathroom() {
-	DBG_S("On light Bathroom");
+	DBG("On light Bathroom");
 	io->ledDim(OSK_DCO3, 100, 2000);
 }
 
 void offLightBathroom() {
-	DBG_S("Off light Bathroom");
+	DBG("Off light Bathroom");
 	io->ledDim(OSK_DCO3, 0, 2000);
 }
 
@@ -142,23 +142,23 @@ void onTriggerIO16(bool value) {
 }
 
 void btnChanged() {
-	DBG_S("IO1 Changed");
+	DBG("IO1 Changed");
 }
 
 void btnHigh() {
-	DBG_S("IO2 HIGH");
+	DBG("IO2 HIGH");
 }
 
 void btnLOW() {
-	DBG_S("IO3 LOW");
+	DBG("IO3 LOW");
 }
 
 void btnClick() {
-	DBG_S("IO4 Click");
+	DBG("IO4 Click");
 }
 
 void btnLongClick() {
-	DBG_S("IO5 long Click");
+	DBG("IO5 long Click");
 }
 /* ==============
 		END DEBUG OUTPUT FUNCTIONS
@@ -243,7 +243,7 @@ void setup()
 {
 	delay(1000);
 	Serial.begin(115200);
-	DBG_S("Starting...");
+	DBG("Starting...");
 
 	// Scan I2C for debug
 	scanner.Init();

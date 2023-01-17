@@ -14,13 +14,8 @@
 #include <WiFi.h>
 #include <ModuleSettings.h>
 #include <NetworkManager.h>
-#include <AsyncElegantOTA.h>
 #include <Debug.h>
-#include <I2CScanner.h>
-
-//#include <AsyncTCP.h>
-#include <ESPAsyncWebServer.h>
-//#include <ArduinoJson.h>
+#include <ArduinoOTA.h>
 
 Button *btn1;
 Button *btn2;
@@ -37,10 +32,6 @@ IO *io;
 Settings settings;
 ModuleSettings moduleSettings;
 NetworkManager *nm;
-
-AsyncWebServer server(80);
-
-I2CScanner scanner;
 
 void debugPrint()
 {
@@ -242,11 +233,9 @@ void setup()
 {
 	delay(1000);
 	Serial.begin(115200);
-	DBG("Starting...");
+	DBG("Starting DC1...");
 
-	// Scan I2C for debug
-	scanner.Init();
-	scanner.Scan();
+	ArduinoOTA.setHostname("home-dc-1");
 
 	EEPROM.begin(sizeof(Settings));
 
@@ -270,12 +259,12 @@ void setup()
 	testIOButtons();
 	testMotionLib();
 
-	AsyncElegantOTA.begin(&server);
-	server.begin();
+	ArduinoOTA.begin();
 }
 
 void loop()
 {
+	ArduinoOTA.handle();
 	#if OSK_DEBUG_USE_TELNET
   	telnet.loop();
 	#endif

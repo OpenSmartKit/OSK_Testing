@@ -1,10 +1,12 @@
 /*
 	Module configuration
 	Define proper board in platformio.ini
-  #define OSK_MAIN_DC_2_0
-  #define OSK_MAIN_RELAY_1_2
-  #define OSK_MAIN_RELAY2_1_0
+  #define OSK_MAIN_DC_S1
+  #define OSK_MAIN_RELAY_S1
+  #define OSK_MAIN_RELAY_S2
 */
+
+#define IO_PCF8574_ADDR 0x27
 
 #include <Arduino.h>
 #include <IO.h>
@@ -14,7 +16,6 @@
 #include <WiFi.h>
 #include <ModuleSettings.h>
 #include <NetworkManager.h>
-#include <AsyncElegantOTA.h>
 #include <Debug.h>
 #include <I2CScanner.h>
 
@@ -247,6 +248,10 @@ void setup()
 	// Scan I2C for debug
 	scanner.Init();
 	scanner.Scan();
+
+	//moduleSettings.setWifiName("ASUS");
+	//moduleSettings.setWifiPassword("special5");
+	//moduleSettings.setModuleName("Test");
 
 	EEPROM.begin(sizeof(Settings));
 
